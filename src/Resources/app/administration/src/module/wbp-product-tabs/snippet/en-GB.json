@@ -1,0 +1,17 @@
+{
+    "wbp-product-tabs": {
+        "general": {
+            "title": "Tabs",
+            "data" : "Data",
+            "tabsName" : "Tab Name",
+            "visibility" : "Visibility",
+            "add-new-tab" : "Add New Tab",
+            "position" : "Position",
+            "edit" : "Edit",
+            "save" : "Save",
+            "delete" : "Delete",
+            "impossible" : "Impossible",
+            "cancel" : "Cancel"
+        }
+    }
+}
