@@ -1,6 +1,6 @@
 <?php
 
-namespace WbpProductTabs\Controller\Api;
+namespace Wbp\ProductTabs\Controller\Api;
 
 
 use Doctrine\DBAL\Connection;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use WbpProductTabs\Resources\helper\TranslationHelper;
+use Wbp\ProductTabs\Resources\helper\TranslationHelper;
 use function React\Promise\resolve;
 
 /**

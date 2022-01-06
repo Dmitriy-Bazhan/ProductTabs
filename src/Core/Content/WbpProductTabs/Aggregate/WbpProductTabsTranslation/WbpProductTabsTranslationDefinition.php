@@ -1,5 +1,5 @@
 <?php
-namespace WbpProductTabs\Core\Content\WbpProductTabs\Aggregate\WbpProductTabsTranslation;
+namespace Wbp\ProductTabs\Core\Content\WbpProductTabs\Aggregate\WbpProductTabsTranslation;
 
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
@@ -17,8 +17,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
-use WbpProductTabs\Core\Content\WbpProductTabs\WbpProductTabsDefinition;
-use WbpProductTabs\Core\Content\WbpProductTabs\WbpProductTabsEntity;
+use Wbp\ProductTabs\Core\Content\WbpProductTabs\WbpProductTabsDefinition;
+use Wbp\ProductTabs\Core\Content\WbpProductTabs\WbpProductTabsEntity;
 
 class WbpProductTabsTranslationDefinition extends EntityTranslationDefinition
 {

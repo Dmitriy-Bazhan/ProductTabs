@@ -1,6 +1,6 @@
 <?php
 
-namespace WbpProductTabs\Subscriber;
+namespace Wbp\ProductTabs\Subscriber;
 
 use Psr\Container\ContainerInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
