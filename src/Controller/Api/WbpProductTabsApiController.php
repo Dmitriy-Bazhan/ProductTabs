@@ -172,7 +172,7 @@ class WbpProductTabsApiController extends AbstractController
     {
         $params = $request->request->all();
 
-        if (is_null($params['newTab']['name']) || is_null($params['newTab']['description']) || is_null($params['newTab']['productId'])) {
+        if (is_null($params['newTab']['name']) || is_null($params['newTab']['productId'])) {
             return new JsonResponse([
                 'state' => 'failed',
                 'error' => 'Configuration invalid'
@@ -184,28 +184,50 @@ class WbpProductTabsApiController extends AbstractController
         $criteria->addSorting(new FieldSorting('position', FieldSorting::ASCENDING));
         $element = $this->productTabsRepository->search($criteria, $context)->last();
 
-
         $id = Uuid::randomHex();
 
-        $this->productTabsRepository->create([
-            [
-                'id' => $id,
-                'productId' => $params['newTab']['productId'],
-                'position' => ++$element->position,
-                'name' => $this->translationHelper->adjustTranslations([
-                    'de-DE' => $params['newTab']['name'] . ' DE',
-                    'en-GB' => $params['newTab']['name'] . ' EN'
-                ]),
-                'description' => $this->translationHelper->adjustTranslations([
-                    'de-DE' => $params['newTab']['description'] . ' DE',
-                    'en-GB' => $params['newTab']['description'] . ' EN',
-                ]),
-                'isEnabled' => 1,
-                'createdAt' => date('Y-m-d H:i:s'),
-                'updatedAt' => null,
-            ]
-        ], $context);
+        if($params['newTab']['show'] == 'description') {
+            $this->productTabsRepository->create([
+                [
+                    'id' => $id,
+                    'productId' => $params['newTab']['productId'],
+                    'position' => ++$element->position,
+                    'show' => $params['newTab']['show'],
+                    'name' => $this->translationHelper->adjustTranslations([
+                        'de-DE' => $params['newTab']['name'],
+                        'en-GB' => $params['newTab']['name']
+                    ]),
+                    'description' => $this->translationHelper->adjustTranslations([
+                        'de-DE' => $params['newTab']['description'],
+                        'en-GB' => $params['newTab']['description'],
+                    ]),
+                    'isEnabled' => 1,
+                    'createdAt' => date('Y-m-d H:i:s'),
+                    'updatedAt' => null,
+                ]
+            ], $context);
+        }
 
+        if($params['newTab']['show'] == 'products') {
+
+            $productIsd = implode('&&',$params['newTab']['selectProductsIds']);
+            $this->productTabsRepository->create([
+                [
+                    'id' => $id,
+                    'productId' => $params['newTab']['productId'],
+                    'position' => ++$element->position,
+                    'show' => $params['newTab']['show'],
+                    'productString' => $productIsd,
+                    'isEnabled' => 1,
+                    'createdAt' => date('Y-m-d H:i:s'),
+                    'updatedAt' => null,
+                    'name' => $this->translationHelper->adjustTranslations([
+                        'de-DE' => $params['newTab']['name'],
+                        'en-GB' => $params['newTab']['name']
+                    ]),
+                ]
+            ], $context);
+        }
 
         return new JsonResponse([
             'success' => $params
@@ -282,6 +304,7 @@ class WbpProductTabsApiController extends AbstractController
 
         $name = $params['tab']['tabsName'];
         $description = $params['tab']['data'];
+        $show = $params['tab']['show'];
         $id = $params['tab']['id'];
         $langId = strtoupper($params['tab']['langId']);
 
@@ -289,14 +312,28 @@ class WbpProductTabsApiController extends AbstractController
         $criteria->addFilter(new EqualsFilter('id', $id));
         $id = $this->productTabsRepository->searchIds($criteria, $context)->firstId();
 
-        $this->productTabsRepository->update([
-            [
-                'id' => $id,
-                'name' => $name,
-                'description' => $description
-            ]
-        ], $context);
 
+        if($show == 'description') {
+            $this->productTabsRepository->update([
+                [
+                    'id' => $id,
+                    'name' => $name,
+                    'show' => $show,
+                    'description' => $description
+                ]
+            ], $context);
+        }
+        if($show == 'products') {
+            $productIds = implode('&&',$params['newTab']['selectProductsIds']);
+            $this->productTabsRepository->update([
+                [
+                    'id' => $id,
+                    'name' => $name,
+                    'show' => $show,
+                    'productString' => $productIds
+                ]
+            ], $context);
+        }
 
         return new JsonResponse([
             'success' => ''

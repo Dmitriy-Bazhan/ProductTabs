@@ -18,24 +18,50 @@
             </div>
 
             <div>
+                <sw-switch-field label="" v-model="checkbox"></sw-switch-field>
+            </div>
+
+
+
+            <div v-if="checkbox">
+                <sw-multi-select
+                        v-model="tabs.selectProductsIds"
+                        class="sw-flow-rule-modal__type"
+                        value-property="id"
+                        label-property="name"
+                        :label="$tc('wbp-product-tabs.general.products')"
+                        :options="selectProducts"
+                        :is-loading="isLoading"
+                >
+                    <template #selection-label-property="{ item }">
+                        {{ item.name }}
+                    </template>
+
+                    <template #result-label-property="{ item }">
+                        {{ item.name }}
+                    </template>
+
+                </sw-multi-select>
+
+            </div>
+
+            <div v-else>
                 <sw-text-editor
-                        required
                         class="wbp-product-tabs-data"
-                        validation="required"
                         type="textarea"
                         v-model="tabs.description"
-                        :label="$tc('wbp-product-tabs.general.data')"
-                        :error="tabsDescriptionError"
-                        >
+                        :label="$tc('wbp-product-tabs.general.description')"
+                >
                 </sw-text-editor>
 
             </div>
-                <div v-if="item === null">
-                    <sw-button @click="saveNewTab()">{{ $tc('wbp-product-tabs.general.save') }}</sw-button>
-                </div>
-                <div v-else>
-                    <sw-button @click="saveTabs()">{{ $tc('wbp-product-tabs.general.edit') }}</sw-button>
-                </div>
+
+            <div v-if="item === null">
+                <sw-button @click="saveNewTab()">{{ $tc('wbp-product-tabs.general.save') }}</sw-button>
+            </div>
+            <div v-else>
+                <sw-button @click="saveTabs()">{{ $tc('wbp-product-tabs.general.edit') }}</sw-button>
+            </div>
 
 
         {% endblock %}

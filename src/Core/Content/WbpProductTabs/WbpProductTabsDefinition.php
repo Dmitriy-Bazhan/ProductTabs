@@ -46,6 +46,8 @@ class WbpProductTabsDefinition extends EntityDefinition
             (new IdField('product_id', 'productId'))->addFlags(new ApiAware(), new Required()),
             (new IntField('position', 'position'))->addFlags(new ApiAware(), new Required()),
             (new IntField('is_enabled', 'isEnabled'))->addFlags(new ApiAware(), new Required()),
+            (new StringField('show', 'show'))->addFlags(new ApiAware()),
+            (new LongTextField('product_string', 'productString'))->addFlags(new ApiAware()),
             (new TranslatedField('name'))->addFlags(new ApiAware(), new Required()),
             (new TranslatedField('description'))->addFlags(new ApiAware(), new Required()),
             (new TranslationsAssociationField(

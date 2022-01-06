@@ -12,6 +12,28 @@ class WbpProductTabsEntity extends Entity
     protected $productId;
     protected $position;
     protected $isEnabled;
+    protected $show;
+    protected $productString;
+
+    public function getProductString()
+    {
+        return $this->productString;
+    }
+
+    public function setProductString(string $productString)
+    {
+        $this->productString = $productString;
+    }
+
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    public function setShow(string $show)
+    {
+        $this->show = $show;
+    }
 
     public function getIsEnabled()
     {

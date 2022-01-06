@@ -20,6 +20,8 @@ class Migration1635332000WbpProductTabs extends MigrationStep
                 `product_id` BINARY (16) NOT NULL,
                 `position` tinyint(1),
                 `is_enabled` tinyint(1) DEFAULT 1,
+                `show` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'description',
+                `product_string` TEXT DEFAULT NULL,
                 `created_at` datetime(3) NOT NULL,
                 `updated_at` datetime(3) DEFAULT NULL,
                 PRIMARY KEY ( `id` )
