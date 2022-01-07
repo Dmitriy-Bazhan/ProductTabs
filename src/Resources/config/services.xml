@@ -17,6 +17,7 @@
         <!-- Subscribers -->
         <service id="Wbp\ProductTabs\Subscriber\WbpProductTabsSubscriber">
             <argument type="service" id="wbp_product_tabs.repository"/>
+            <argument type="service" id="sales_channel.product.repository"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 

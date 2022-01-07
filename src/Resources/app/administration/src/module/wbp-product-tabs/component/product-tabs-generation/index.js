@@ -87,6 +87,7 @@ Component.register('wbp-product-tabs-modal-generation', {
                 ]);
                 this.selectProducts = result[0];
                 this.isLoading = false;
+
             } catch {
                 this.isLoading = true;
             }
@@ -103,6 +104,10 @@ Component.register('wbp-product-tabs-modal-generation', {
                     if(this.tabs.productString !== null){
                         let temp = this.tabs.productString.split('&&');
                         this.tabs.selectProductsIds = temp;
+
+                    }
+                    if(this.tabs.show === 'products') {
+                        this.checkbox = true;
                     }
                 }).catch((error) => {
                     console.log(error)
@@ -116,7 +121,12 @@ Component.register('wbp-product-tabs-modal-generation', {
             this.changeShowInTabs(this.checkbox);
             if (this.tabs.name !== undefined) {
 
-                if(this.tabs.show === 'products' && this.tabs.selectProductsIds.length > 0){
+                if(this.tabs.show === 'products'){
+                        if(this.tabs.selectProductsIds.length > 0){
+                            this.tabs.productString = this.tabs.selectProductsIds.join('&&');
+                        }else{
+                            this.tabs.productString = '';
+                        }
 
                 }
                 console.log(this.tabs);

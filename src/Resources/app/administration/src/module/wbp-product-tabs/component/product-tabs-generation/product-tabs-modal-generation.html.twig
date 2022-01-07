@@ -23,8 +23,8 @@
 
 
 
-            <div v-if="checkbox">
-                <sw-multi-select
+            <div>
+                <sw-multi-select v-if="checkbox"
                         v-model="tabs.selectProductsIds"
                         class="sw-flow-rule-modal__type"
                         value-property="id"
@@ -43,10 +43,7 @@
 
                 </sw-multi-select>
 
-            </div>
-
-            <div v-else>
-                <sw-text-editor
+                <sw-text-editor v-else
                         class="wbp-product-tabs-data"
                         type="textarea"
                         v-model="tabs.description"
