@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace WbpProductTabs\Resources\helper;
+namespace Wbp\ProductTabs\Resources\helper;
 
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;

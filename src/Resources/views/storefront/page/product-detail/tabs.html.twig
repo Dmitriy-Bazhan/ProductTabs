@@ -7,7 +7,6 @@
                     <ul class="nav nav-tabs product-detail-tab-navigation-list"
                         id="product-detail-tabs"
                         role="tablist">
-
                         {% if page.extensions.description.visibility == 1 %}
 
                             {% block page_product_detail_tabs_navigation_description %}
@@ -43,10 +42,12 @@
 
                         {% endif %}
 
+
                         {% if page.extensions.reviews.visibility == 1 %}
 
                             {% block page_product_detail_tabs_navigation_review %}
                                 {% if config('core.listing.showReview') %}
+
                                     <li class="nav-item">
                                         <a class="nav-link {% if (ratingSuccess == 1) or (ratingSuccess == -1) or (page.extensions.description.visibility == 0) %}active{% endif %} product-detail-tab-navigation-link"
                                            id="review-tab"
@@ -135,14 +136,33 @@
                             {% for index,item in page.extensions.new_tabs.data %}
 
                                 {% block new_tab_item_block %}
-
                                     <div class="tab-pane fade show {% if ((ratingSuccess == 1) or (ratingSuccess == -1)
                                         or((page.extensions.description.visibility == 0)
                                         and(page.extensions.review.visibility == 0)) and (index == 0)) %}active{% endif %}"
                                          id="{{ item.alias }}-tab-pane"
                                          role="tabpanel"
                                          aria-labelledby="{{ item.alias }}-tab">
-                                        {{ item.description|raw }}
+
+                                        {% if item.show === 'description' %}
+
+                                            {{ item.description|raw }}
+
+                                        {% endif %}
+
+                                        {% if item.show === 'products' %}
+
+                                            {% if item.products !== null %}
+
+                                                {{ dump(item.products) }}
+
+                                            {% else %}
+
+                                                <h5>No products</h5>
+
+                                            {% endif %}
+
+                                        {% endif %}
+
                                     </div>
 
                                 {% endblock %}

@@ -1,8 +1,8 @@
 {
-  "name": "webiprog/product-tabs-plugin",
+  "name": "wbp/product-tabs",
   "description": "Customize your product tabs",
-  "type": "shopware-platform-plugin",
   "version": "1.0.0",
+  "type": "shopware-platform-plugin",
   "license": "MIT",
   "authors": [
     {
@@ -10,13 +10,11 @@
       "homepage": "https://www.webiprog.de/"
     }
   ],
-  "autoload": {
-    "psr-4": {
-      "WbpProductTabs\\": "src/"
-    }
+  "require": {
+    "shopware/core": "6.4.*"
   },
   "extra": {
-    "shopware-plugin-class": "WbpProductTabs\\WbpProductTabs",
+    "shopware-plugin-class": "Wbp\\ProductTabs\\WbpProductTabs",
     "label": {
       "de-DE": "WbpProduktTabs",
       "en-GB": "WbpProductTabs"
@@ -24,6 +22,11 @@
     "description": {
       "de-DE": "Passen Sie Ihre Produktregisterkarten an",
       "en-GB": "Customize your product tabs"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Wbp\\ProductTabs\\": "src/"
     }
   }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace WbpProductTabs\Core\Content\WbpProductTabs;
+namespace Wbp\ProductTabs\Core\Content\WbpProductTabs;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace WbpProductTabs;
+namespace Wbp\ProductTabs;
 
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Plugin;

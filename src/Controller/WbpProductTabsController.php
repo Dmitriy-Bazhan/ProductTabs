@@ -1,6 +1,6 @@
 <?php
 
-namespace WbpProductTabs\Controller;
+namespace Wbp\ProductTabs\Controller;
 
 
 use Shopware\Core\Framework\Context;

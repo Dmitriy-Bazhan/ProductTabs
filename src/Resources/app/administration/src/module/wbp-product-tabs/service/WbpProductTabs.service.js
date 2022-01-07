@@ -14,7 +14,6 @@ export default class WbpProductTabsService extends ApiService {
         let setDefaultTabsResponse = await this.httpClient.post('/wbp-product-tabs/set-default-tabs', {productId: productId}, {
             headers: this.getBasicHeaders()
         });
-
         return setDefaultTabsResponse;
     }
 
@@ -34,7 +33,6 @@ export default class WbpProductTabsService extends ApiService {
 
         return response;
     }
-
 
     async removeTab(id) {
 

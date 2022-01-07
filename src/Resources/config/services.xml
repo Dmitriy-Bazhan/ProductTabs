@@ -6,24 +6,25 @@
 
     <services>
         <!-- Definitions -->
-        <service id="WbpProductTabs\Core\Content\WbpProductTabs\WbpProductTabsDefinition">
+        <service id="Wbp\ProductTabs\Core\Content\WbpProductTabs\WbpProductTabsDefinition">
             <tag name="shopware.entity.definition" entity="wbp_product_tabs" />
         </service>
 
-        <service id="WbpProductTabs\Core\Content\WbpProductTabs\Aggregate\WbpProductTabsTranslation\WbpProductTabsTranslationDefinition">
+        <service id="Wbp\ProductTabs\Core\Content\WbpProductTabs\Aggregate\WbpProductTabsTranslation\WbpProductTabsTranslationDefinition">
             <tag name="shopware.entity.definition" entity="wbp_product_tabs_translation" />
         </service>
 
         <!-- Subscribers -->
-        <service id="WbpProductTabs\Subscriber\WbpProductTabsSubscriber">
+        <service id="Wbp\ProductTabs\Subscriber\WbpProductTabsSubscriber">
             <argument type="service" id="wbp_product_tabs.repository"/>
+            <argument type="service" id="sales_channel.product.repository"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 
 
 
         <!-- Controllers -->
-        <service id="WbpProductTabs\Controller\Api\WbpProductTabsApiController" public="true">
+        <service id="Wbp\ProductTabs\Controller\Api\WbpProductTabsApiController" public="true">
             <argument type="service" id="service_container"/>
             <argument type="service" id="wbp_product_tabs.repository"/>
             <argument type="service" id="Doctrine\DBAL\Connection"/>
@@ -32,7 +33,7 @@
             </call>
         </service>
 
-        <service id="WbpProductTabs\Controller\WbpProductTabsController" public="true">
+        <service id="Wbp\ProductTabs\Controller\WbpProductTabsController" public="true">
             <argument type="service" id="wbp_product_tabs.repository"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>

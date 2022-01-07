@@ -37,8 +37,8 @@ Component.register('product-tabs', {
                     align: 'right',
                 },
                 {
-                    property: 'description',
-                    label: this.$tc('wbp-product-tabs.general.data'),
+                    property: 'show',
+                    label: this.$tc('wbp-product-tabs.general.show'),
                     width: '200px',
                     align: 'left',
                 },

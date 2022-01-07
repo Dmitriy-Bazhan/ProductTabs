@@ -2,7 +2,9 @@
     "wbp-product-tabs": {
         "general": {
             "title": "Tabs",
-            "data" : "Data",
+            "description" : "Description",
+            "products" : "Products",
+            "show" : "Show",
             "tabsName" : "Tab Name",
             "visibility" : "Visibility",
             "add-new-tab" : "Add New Tab",
