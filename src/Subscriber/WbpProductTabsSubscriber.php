@@ -52,7 +52,6 @@ class WbpProductTabsSubscriber implements EventSubscriberInterface
         $salesChannelContext = $event->getSalesChannelContext();
         $productId = $event->getPage()->getProduct()->id;
 
-
         $parentProductId = $event->getPage()->getProduct()->getParentId();
         if (!is_null($parentProductId)) {
             $productId = $parentProductId;
@@ -61,12 +60,12 @@ class WbpProductTabsSubscriber implements EventSubscriberInterface
         $criteria = new Criteria();
         $criteria->addSorting(new FieldSorting('position', FieldSorting::ASCENDING));
         $criteria->addFilter(new EqualsFilter('productId', $productId));
-
         $tabs = $this->productTabsRepository->search($criteria, $context)->getElements();
 
         if (count($tabs) > 0) {
             $newTab = [];
             foreach ($tabs as $tab) {
+                $arr = [];
                 if ($tab->position == 2) {
                     $event->getPage()->addExtension('reviews', new ArrayStruct([
                         'visibility' => $tab->isEnabled]));
@@ -75,16 +74,26 @@ class WbpProductTabsSubscriber implements EventSubscriberInterface
                         'visibility' => $tab->isEnabled]));
                 } else {
                     if ($tab->isEnabled == 1) {
-                        $arr['name'] = $tab->name;
+                        if (!is_null($tab->name)) {
+                            $arr['name'] = $tab->name;
+                            $arr['alias'] = 'id' . $tab->id . str_replace(' ', '', $tab->name);
+                        } else {
+                            $arr['name'] = $tab->translated['name'];
+                            $arr['alias'] = 'id' . $tab->id .str_replace(' ', '', $tab->translated['name']);
+                        }
                         $arr['show'] = $tab->show;
-                        $arr['alias'] = 'id' . str_replace(' ', '', $tab->name);
-                        $arr['description'] = $tab->description;
+
+                        if (!is_null($tab->description)) {
+                            $arr['description'] = $tab->description;
+                        } else {
+                            $arr['description'] = $tab->translated['description'];
+                        }
+
                         $arr['id'] = $tab->id;
                         $arr['products'] = [];
 
-                        if($tab->show == 'products' && !is_null($tab->productString)){
-
-                            $productIds = explode('&&',$tab->productString);
+                        if ($tab->show == 'products' && !is_null($tab->productString)) {
+                            $productIds = explode('&&', $tab->productString);
                             $criteria = new Criteria();
                             $criteria->setIds($productIds);
                             $criteria->addAssociation('cover');
@@ -92,13 +101,11 @@ class WbpProductTabsSubscriber implements EventSubscriberInterface
                             $products = $this->salesChannelRepository->search($criteria, $salesChannelContext)->getElements();
                             $arr['products'] = $products;
                         }
-
                         $newTab[] = $arr;
                     }
                 }
-
-
             }
+
             if (count($newTab) > 0) {
                 $event->getPage()->addExtension('new_tabs', new ArrayStruct([
                     'data' => $newTab
