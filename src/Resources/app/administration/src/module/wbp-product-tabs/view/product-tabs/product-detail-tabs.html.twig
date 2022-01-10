@@ -22,6 +22,10 @@
 
                     {% endblock %}
 
+                    <div v-if="errors.length > 0">
+                        <p v-for="error in errors">{{ error }}</p>
+                    </div>
+
                 </sw-container>
 
             {% endblock %}
@@ -166,9 +170,10 @@
 
     {% block sw_product_tabs_modal_generation %}
         <wbp-product-tabs-modal-generation
-                v-if="activeModal === 'addNewTab'"
+                v-if="activeModal"
                 :productId="product.id"
                 :item="editItem"
+                :lastPosition="lastPosition"
                 @close-modal="CloseActiveModal()"
                 @product-tabs-save="productTabsSave"
         />

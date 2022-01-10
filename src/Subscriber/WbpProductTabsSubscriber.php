@@ -80,8 +80,10 @@ class WbpProductTabsSubscriber implements EventSubscriberInterface
                         $arr['alias'] = 'id' . str_replace(' ', '', $tab->name);
                         $arr['description'] = $tab->description;
                         $arr['id'] = $tab->id;
+                        $arr['products'] = [];
 
                         if($tab->show == 'products' && !is_null($tab->productString)){
+
                             $productIds = explode('&&',$tab->productString);
                             $criteria = new Criteria();
                             $criteria->setIds($productIds);

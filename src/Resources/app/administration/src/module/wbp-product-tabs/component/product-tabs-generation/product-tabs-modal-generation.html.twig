@@ -4,6 +4,10 @@
 
         {% block wbp_product_tabs_modal_generation_sidebar %}
 
+            <div v-if="errors.length > 0">
+                <p v-for="error in errors">{{ error }}</p>
+            </div>
+
             <div>
                 <sw-text-field
                         required
@@ -22,16 +26,16 @@
             </div>
 
 
+            {% block sw_product_tabs_modal_generation_multiselect %}
 
-            <div>
                 <sw-multi-select v-if="checkbox"
-                        v-model="tabs.selectProductsIds"
-                        class="sw-flow-rule-modal__type"
-                        value-property="id"
-                        label-property="name"
-                        :label="$tc('wbp-product-tabs.general.products')"
-                        :options="selectProducts"
-                        :is-loading="isLoading"
+                                 v-model="tabs.selectProductsIds"
+                                 class="sw-flow-rule-modal__type"
+                                 value-property="id"
+                                 label-property="name"
+                                 :label="$tc('wbp-product-tabs.general.products')"
+                                 :options="selectProducts"
+                                 :is-loading="isLoading"
                 >
                     <template #selection-label-property="{ item }">
                         {{ item.name }}
@@ -43,19 +47,22 @@
 
                 </sw-multi-select>
 
+            {% endblock %}
+
+            {% block sw_product_tabs_modal_generation_description_editor %}
+
                 <sw-text-editor v-else
-                        class="wbp-product-tabs-data"
-                        type="textarea"
-                        v-model="tabs.description"
-                        :label="$tc('wbp-product-tabs.general.description')"
+                                v-model="tabs.description"
+                                :label="$tc('wbp-product-tabs.general.description')"
                 >
                 </sw-text-editor>
 
-            </div>
+            {% endblock %}
 
             <div v-if="item === null">
                 <sw-button @click="saveNewTab()">{{ $tc('wbp-product-tabs.general.save') }}</sw-button>
             </div>
+
             <div v-else>
                 <sw-button @click="saveTabs()">{{ $tc('wbp-product-tabs.general.edit') }}</sw-button>
             </div>

@@ -22,6 +22,7 @@ Component.register('product-tabs', {
     data: function () {
         return {
             dataSource: [],
+            lastPosition : '',
             columns: [
                 {
                     property: 'position',
@@ -49,10 +50,12 @@ Component.register('product-tabs', {
                     align: 'right',
                 },
             ],
-            activeModal: '',
+            activeModal: false,
             showDeleteModal: '',
             editItem: null,
-            languageId : null,
+            tab : {},
+            languageId : '',
+            errors: [],
         };
     },
 
@@ -83,7 +86,6 @@ Component.register('product-tabs', {
         },
 
         itemsCriteria() {
-            //Todo: temporary
             if (this.product.id === undefined) {
                 let path = window.location.href;
                 let arr = path.split('/');
@@ -113,19 +115,18 @@ Component.register('product-tabs', {
             });
         },
 
-
         onChangeLanguage() {
-            console.log('FFFFF');
             this.getList();
         },
 
         addNewTab() {
-            this.activeModal = 'addNewTab';
+            this.lastPosition = this.dataSource[this.dataSource.length - 1].position;
+            this.activeModal = true;
         },
 
         productTabsSave() {
-            this.activeModal = '';
             this.editItem = null;
+            this.activeModal = false;
             this.getList();
         },
 
@@ -133,9 +134,8 @@ Component.register('product-tabs', {
             if (item.position <= 2) {
                 return;
             }
-            item.languageId = this.languageId;
             this.editItem = item;
-            this.activeModal = 'addNewTab';
+            this.activeModal = true;
         },
 
         onConfirmDelete(item) {
@@ -154,8 +154,8 @@ Component.register('product-tabs', {
         },
 
         CloseActiveModal(){
-            this.activeModal = '';
             this.editItem = null;
+            this.activeModal = false;
         },
 
         changeVisibility(item) {
@@ -169,13 +169,34 @@ Component.register('product-tabs', {
         },
 
         setDefaultTabs() {
-            this.WbpProductTabsService.setDefaultTabs(this.product.id)
-                .then((result) => {
-                    this.getList();
-                })
-                .catch((error) => {
-                    this.handleError(error);
-                });
+            this.errors = [];
+            let path = window.location.href;
+            let arr = path.split('/');
+
+            this.tabs = this.wbpProductTabsRepository.create(Shopware.Context.api);
+            this.tabs.productId = arr[7];
+            this.tabs.name = 'Description';
+            this.tabs.position = 1;
+            this.tabs.isEnabled = 1;
+
+            this.wbpProductTabsRepository.save(this.tabs, Context.api).then((response) => {
+               //
+            }).catch((error) => {
+                this.errors.push('Please, first use your default language');
+                // console.log(error);
+            });
+
+            this.tabs = this.wbpProductTabsRepository.create(Shopware.Context.api);
+            this.tabs.productId = arr[7];
+            this.tabs.name = 'Reviews';
+            this.tabs.position = 2;
+            this.tabs.isEnabled = 1;
+
+            this.wbpProductTabsRepository.save(this.tabs, Context.api).then((response) => {
+                this.getList();
+            }).catch((error) => {
+                console.log(error);
+            });
         },
 
         positionUp(item){
